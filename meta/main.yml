@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: {{ role_name }}
+  namespace: professormanhattan
+  author: professormanhattan
+  description: Installs {{ name }} on nearly any OS
+  company: Megabyte Labs
+  issue_tracker_url: https://gitlab.com/megabyte-labs/ansible-roles/{{ role_name }}/-/issues
+  license: license (MIT)
+  min_ansible_version: 2.10
+  platforms:
+    - name: ArchLinux
+      versions:
+        - all
+  galaxy_tags:
+    - install
+    - crossplatform
+    - role
+    - ansible
+    - awesome
+dependencies: []
