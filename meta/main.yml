@@ -1,21 +1,34 @@
 ---
 galaxy_info:
-  role_name: {{ role_name }}
+  role_name: ansible-role
   namespace: professormanhattan
   author: professormanhattan
-  description: Installs {{ name }} on nearly any OS
+  description: Provides a great, cross-platform starting point for developing an Ansible role
   company: Megabyte Labs
-  issue_tracker_url: https://gitlab.com/megabyte-labs/ansible-roles/{{ role_name }}/-/issues
+  issue_tracker_url: https://gitlab.com/megabyte-labs/templates/ansible-role/-/issues
   license: license (MIT)
-  min_ansible_version: 2.10
+  min_ansible_version: 2.1
   platforms:
     - name: ArchLinux
       versions:
         - all
   galaxy_tags:
-    - install
-    - crossplatform
-    - role
     - ansible
+    - archlinux
     - awesome
+    - centos
+    - crossplatform
+    - debian
+    - doctor
+    - fedora
+    - install
+    - installdoc
+    - installdoctor
+    - macos
+    - megabytelabs
+    - molecule
+    - professormanhattan
+    - role
+    - ubuntu
+    - windows
 dependencies: []

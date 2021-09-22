@@ -1,0 +1,153 @@
+{
+  "name": "@installdoc/template-ansible-role",
+  "version": "1.0.0",
+  "description": "Provides a great, cross-platform starting point for developing an Ansible role",
+  "license": "MIT",
+  "author": "Brian Zalewski <brian@megabyte.space> (https://megabyte.space)",
+  "homepage": "https://megabyte.space",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProfessorManhattan/template-ansible-role.git"
+  },
+  "bugs": {
+    "email": "help@megabyte.space",
+    "url": "https://gitlab.com/megabyte-labs/templates/ansible-role/-/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "clean": "task common:clean",
+    "commit": "task common:commit",
+    "info": "task --list",
+    "prepare": "task common:husky",
+    "prepare-release": "task common:prepare-release",
+    "requirements": "task common:requirements",
+    "reset": "task common:reset",
+    "reset-force": "task common:reset-force",
+    "update": "task common:update"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^13.1.0",
+    "@megabytelabs/prettier-config": "^2.0.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-formatter-pretty": "^4.1.0",
+    "eslint-plugin-editorconfig": "^3.0.2",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-jsonc": "^1.6.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-yml": "0.10.1",
+    "prettier": "^2.4.0"
+  },
+  "keywords": [
+    "ansible",
+    "archlinux",
+    "awesome",
+    "centos",
+    "crossplatform",
+    "debian",
+    "doctor",
+    "fedora",
+    "install",
+    "installdoc",
+    "installdoctor",
+    "macos",
+    "megabytelabs",
+    "molecule",
+    "professormanhattan",
+    "role",
+    "ubuntu",
+    "windows"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "blueprint": {
+    "description": "Provides a great, cross-platform starting point for developing an Ansible role",
+    "name": "Ansible Role Template",
+    "overview": "This should be a full paragraph of text that describes exactly what the software is as well as any additional info specific to the role",
+    "repository": {
+      "github": "https://github.com/ProfessorManhattan/template-ansible-role",
+      "gitlab": "https://gitlab.com/megabyte-labs/templates/ansible-role",
+      "prefix": {
+        "github": "template-"
+      }
+    },
+    "slug": "ansible-role",
+    "title": "A custom title - it can be the same as `name` or more elaborate (e.g. 'Android Studio - An IDE for Android Development')"
+  },
+  "funding": [
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/megabytelabs"
+    },
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/ProfessorManhattan"
+    }
+  ],
+  "lint-staged": {
+    "**/*": [
+      "blocklint --wordlist blacklist,slave,whitelist",
+      "check-merge-conflict",
+      "check-added-large-files",
+      "check-symlinks",
+      "destroyed-symlinks"
+    ],
+    "**/*.(css|html|less|md|mjml|php|scss|sh|xml)": [
+      "prettier --write"
+    ],
+    "**/!(package).json": [
+      "task fix:json --"
+    ],
+    "package.json": [
+      "task fix:json --",
+      "prettier-package-json --write"
+    ],
+    "**/*.(js|jsx|ts)": [
+      "task fix:js --fix"
+    ],
+    "**/*.(sh|sh.j2)": [
+      "prettier --write",
+      "shellcheck"
+    ],
+    "**/*.toml": [
+      "check-toml"
+    ],
+    "**/*.xml": [
+      "check-xml"
+    ],
+    "**/*.yml": [
+      "task fix:yaml --",
+      "yamllint -s"
+    ],
+    "**/*.(jpg|png)": [
+      "task image:compress --"
+    ],
+    "logo.png": [
+      "task image:resize -- 200 200",
+      "task image:compress --"
+    ],
+    "requirements.txt": [
+      "requirements-txt-fixer"
+    ],
+    "**/*.py": [
+      "black",
+      "flake8"
+    ],
+    "**/*vault.yml": [
+      "task ansible:vault:lint:file --"
+    ]
+  },
+  "prettier": "@megabytelabs/prettier-config",
+  "standard-version": {
+    "scripts": {
+      "prerelease": "git add --all"
+    }
+  }
+}

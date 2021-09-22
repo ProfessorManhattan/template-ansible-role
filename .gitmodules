@@ -1,0 +1,4 @@
+[submodule ".common"]
+	path = .common
+	url = https://gitlab.com/megabyte-space/common/ansible.git
+	branch = master
