@@ -71,7 +71,7 @@ keywords = [
   "windows"
 ]
 license = "MIT"
-name = "template-"
+name = "template-ansible-role"
 readme = "README.md"
 version = "1.0.0"
 

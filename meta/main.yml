@@ -2,16 +2,13 @@
 galaxy_info:
   role_name: ansible-role
   namespace: professormanhattan
-  author: professormanhattan
+  author: Brian Zalewski
   description: Provides a great, cross-platform starting point for developing an Ansible role
-  company: Megabyte Labs
+  company: Megabyte LLC
   issue_tracker_url: https://gitlab.com/megabyte-labs/templates/ansible-role/-/issues
   license: license (MIT)
   min_ansible_version: 2.1
-  platforms:
-    - name: ArchLinux
-      versions:
-        - all
+  platforms: []
   galaxy_tags:
     - ansible
     - archlinux
@@ -25,10 +22,12 @@ galaxy_info:
     - installdoc
     - installdoctor
     - macos
+    - mblabs
     - megabytelabs
     - molecule
     - professormanhattan
     - role
     - ubuntu
+    - washingtondc
     - windows
 dependencies: []

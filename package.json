@@ -1,4 +1,5 @@
 {
+  "private": false,
   "name": "@installdoc/template-ansible-role",
   "version": "1.0.0",
   "description": "Provides a great, cross-platform starting point for developing an Ansible role",
@@ -7,7 +8,7 @@
   "homepage": "https://megabyte.space",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProfessorManhattan/template-ansible-role.git"
+    "url": "git+https://github.com/megabyte-labs/template-ansible-role.git"
   },
   "bugs": {
     "email": "help@megabyte.space",
@@ -15,25 +16,46 @@
   },
   "type": "module",
   "scripts": {
+    "build": "bash start.sh && task ansible:build:none",
     "clean": "task common:clean",
-    "commit": "task common:commit",
+    "commit": "bash start.sh && task commit",
+    "fix": "bash start.sh && task fix",
+    "help": "bash start.sh && task --menu",
     "info": "task --list",
-    "prepare": "task common:husky",
+    "lint": "bash start.sh && task lint",
+    "preload": "bash start.sh && task preload",
+    "prepare": "bash start.sh && (test -f Taskfile.yml && task npm:prepare) || true",
     "prepare-release": "task common:prepare-release",
+    "release": "bash start.sh && task publish:semantic-release",
+    "repair": "bash <(curl -sS https://install.doctor/repair)",
     "requirements": "task common:requirements",
     "reset": "task common:reset",
     "reset-force": "task common:reset-force",
-    "update": "task common:update"
+    "start": "test -z $SKIP_NPM_START && bash start.sh || true",
+    "test": "bash start.sh && [ -z \"$PS1\" ] && task ansible:test:prompt || task ansible:test:default",
+    "unpack": "bash start.sh && task npm:bundle:unpack",
+    "update": "bash start.sh && task update",
+    "vscode": "bash start.sh && task vscode"
   },
   "config": {
     "commitizen": {
-      "path": "cz-conventional-changelog"
+      "path": "node_modules/git-cz-emoji"
     }
   },
+  "dependencies": {},
+  "optionalDependencies": {},
   "devDependencies": {
+    "@commitlint/config-conventional": "latest",
+    "eslint-config-strict-mode": "latest",
+    "git-cz-emoji": "latest",
+    "handlebars-helpers": "latest",
+    "prettier-config-sexy-mode": "latest",
+    "semantic-release-config": "latest",
+    "typescript": "^4.5.5"
   },
   "keywords": [
     "ansible",
+    "ansible-role",
     "archlinux",
     "awesome",
     "centos",
@@ -45,21 +67,29 @@
     "installdoc",
     "installdoctor",
     "macos",
+    "mblabs",
     "megabytelabs",
     "molecule",
     "professormanhattan",
     "role",
     "ubuntu",
+    "washingtondc",
     "windows"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14.18.0"
+  },
+  "publishConfig": {
+    "@gitlab:registry": "https://gitlab.com/api/v4/projects//packages/npm/",
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "edge"
   },
   "blueprint": {
     "boilerplate": true,
     "description": "Provides a great, cross-platform starting point for developing an Ansible role",
-    "name": "Ansible Role",
     "group": "ansible",
+    "name": "Ansible Role",
     "overview": "This repository contains the base structure for an Ansible role. It includes an extensive set of Molecule test options and build tools / configs useful for automating the repository update process",
     "repository": {
       "github": "https://github.com/megabyte-labs/template-ansible-role",
@@ -68,9 +98,28 @@
         "github": "template-"
       }
     },
-    "subgroup": "role",
     "slug": "ansible-role",
+    "subgroup": "role",
     "title": "Ansible Role Boilerplate"
+  },
+  "changelog": {
+    "displayTypes": [
+      "feat",
+      "fix",
+      "perf",
+      "refactor",
+      "revert"
+    ],
+    "showAuthor": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "helpUrl": "https://megabyte.space/docs/contributing/commits"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-strict-mode"
   },
   "funding": [
     {
@@ -82,63 +131,126 @@
       "url": "https://www.patreon.com/ProfessorManhattan"
     }
   ],
+  "jscpd": {
+    "gitignore": true,
+    "threshold": 0.1
+  },
   "lint-staged": {
+    "(Brewfile|composer.lock|Gemfile|Gopkg.lock|Pipfile.lock)": [
+      "task fix:prettier --"
+    ],
+    "**/!(logo).(jpg|png)": [
+      "task image:compress --"
+    ],
     "**/*": [
-      "blocklint --wordlist blacklist,slave,whitelist",
-      "check-merge-conflict",
-      "check-added-large-files",
-      "check-symlinks",
-      "destroyed-symlinks"
+      "task lint:any --"
     ],
-    "**/*.(css|html|less|md|mjml|php|scss|sh|xml)": [
-      "prettier --write"
-    ],
-    "**/!(package).json": [
+    "**/*!(template).(json|webapp|webmanifest)": [
       "task fix:json --"
     ],
-    "package.json": [
-      "task fix:json --",
-      "prettier-package-json --write"
+    "**/*.(bash|cfg|cgi|command|css|env|env.*|handlebars|hbs|html|less|fcgi|java|md|mdx|mjml|php|phtml|properties|reg|scss|tmpl|tmux|tool|tpl|zsh)": [
+      "task fix:prettier --"
     ],
-    "**/*.(js|jsx|ts)": [
-      "task fix:js --fix"
+    "**/*.(cjs|js|jsx|mjs|ts|tsx)": [
+      "task fix:js --",
+      "task lint:js --"
     ],
-    "**/*.(sh|sh.j2)": [
-      "prettier --write",
-      "shellcheck"
+    "**/*.(yml|yaml)": [
+      "task fix:yaml --",
+      "task lint:yaml --"
+    ],
+    "**/*.go": [
+      "task fix:go --",
+      "task lint:go --"
+    ],
+    "**/*.md": [
+      "task fix:markdown --",
+      "task lint:spelling:markdown --"
+    ],
+    "**/*.php": [
+      "task fix:php --",
+      "task lint:php --"
+    ],
+    "**/*.py": [
+      "task fix:python --",
+      "task lint:python --"
+    ],
+    "**/*.sh": [
+      "task fix:prettier --",
+      "task fix:shell --",
+      "task lint:shell --"
     ],
     "**/*.toml": [
-      "check-toml"
+      "task fix:toml --",
+      "task fix:prettier --",
+      "task lint:toml --"
     ],
     "**/*.xml": [
-      "check-xml"
+      "task fix:xml --",
+      "task lint:xml --"
     ],
-    "**/*.yml": [
-      "task fix:yaml --",
-      "yamllint -s"
+    "**/*vault.yml": [
+      "task ansible:vault:lint:file --"
     ],
-    "**/*.(jpg|png)": [
-      "task image:compress --"
+    "Dockerfile": [
+      "task fix:prettier --",
+      "task lint:docker --"
+    ],
+    "Vagrantfile": [
+      "task fix:prettier --",
+      "task lint:vagrant"
     ],
     "logo.png": [
       "task image:resize -- 200 200",
       "task image:compress --"
-    ],
-    "requirements.txt": [
-      "requirements-txt-fixer"
-    ],
-    "**/*.py": [
-      "black",
-      "flake8"
-    ],
-    "**/*vault.yml": [
-      "task ansible:vault:lint:file --"
     ]
   },
-  "prettier": "@megabytelabs/prettier-config",
-  "standard-version": {
-    "scripts": {
-      "prerelease": "git add --all"
+  "ntl": {
+    "descriptions": {
+      "build": "Builds the project using the build command specified under scripts in package.json",
+      "commit": "If unsure, use this task to commit your code so that it adheres to our commit rules",
+      "fix": "Run auto-fixing with all available auto-fixers",
+      "help": "Display the Bodega Taskfile.yml interactive help menu",
+      "lint": "Lint the project with all available linters",
+      "preload": "Preload the operating system with commonly used libraries and tools",
+      "prepare": "A hook triggered by running npm install that runs logic such as installing pre-commit hooks",
+      "release": "Publish the software to all supported channels using semantic-release",
+      "repair": "Fixes basic issues in projects that are having trouble running basic commands like 'task start'",
+      "start": "Entrypoint for new developers that installs requirements and then runs 'task start'",
+      "test": "Runs the appropriate test logic by running the test command defined under scripts in package.json",
+      "unpack": "Populates production node_modules from compressed copies saved in the .modules/ folder",
+      "update": "Update and refresh the repository with upstream changes and templated parts"
     }
+  },
+  "pnpm": {
+    "allowedVersions": {
+      "@typescript-eslint/eslint-plugin": "5",
+      "typescript": "4"
+    },
+    "neverBuiltDependencies": [
+      "core-js",
+      "core-js-pure",
+      "highlight.js"
+    ],
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "eslint",
+        "prettier",
+        "puppeteer"
+      ]
+    }
+  },
+  "prettier": "prettier-config-sexy-mode",
+  "release": {
+    "branches": [
+      "main",
+      "master",
+      "next",
+      {
+        "name": "beta",
+        "prerelease": true
+      }
+    ],
+    "extends": "semantic-release-config"
   }
 }
