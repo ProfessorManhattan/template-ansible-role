@@ -31,18 +31,6 @@
     }
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^13.1.0",
-    "@megabytelabs/prettier-config": "^2.0.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.32.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-formatter-pretty": "^4.1.0",
-    "eslint-plugin-editorconfig": "^3.0.2",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-jsonc": "^1.6.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-yml": "0.10.1",
-    "prettier": "^2.4.0"
   },
   "keywords": [
     "ansible",
@@ -68,18 +56,21 @@
     "node": ">=10"
   },
   "blueprint": {
+    "boilerplate": true,
     "description": "Provides a great, cross-platform starting point for developing an Ansible role",
-    "name": "Ansible Role Template",
-    "overview": "This should be a full paragraph of text that describes exactly what the software is as well as any additional info specific to the role",
+    "name": "Ansible Role",
+    "group": "ansible",
+    "overview": "This repository contains the base structure for an Ansible role. It includes an extensive set of Molecule test options and build tools / configs useful for automating the repository update process",
     "repository": {
-      "github": "https://github.com/ProfessorManhattan/template-ansible-role",
+      "github": "https://github.com/megabyte-labs/template-ansible-role",
       "gitlab": "https://gitlab.com/megabyte-labs/templates/ansible-role",
       "prefix": {
         "github": "template-"
       }
     },
+    "subgroup": "role",
     "slug": "ansible-role",
-    "title": "A custom title - it can be the same as `name` or more elaborate (e.g. 'Android Studio - An IDE for Android Development')"
+    "title": "Ansible Role Boilerplate"
   },
   "funding": [
     {
