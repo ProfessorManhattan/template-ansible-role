@@ -7,7 +7,7 @@ galaxy_info:
   company: Megabyte LLC
   issue_tracker_url: https://gitlab.com/megabyte-labs/templates/ansible-role/-/issues
   license: license (MIT)
-  min_ansible_version: 2.1
+  min_ansible_version: 2.10
   platforms: []
   galaxy_tags:
     - ansible
